@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import Button from './Button';
 import Home from './Home';
 
 
@@ -13,10 +14,12 @@ class Main extends Component{
   render(){
     return(<View style={styles.container}>
       {/* < */}
-      <Text style={styles.header}/>
+      <View style={styles.header}>
+      <Button style={styles.back} iconName="chevron-left" size='30' color='#8894ff'/>
       <Text style={styles.title}>{this.state.title}</Text>
+      <Button style={styles.back} iconName="square-o" size='30' color='#fff'/>
+      </View>
       <Home changeTitle={function(title){this.setState({title})}.bind(this)}/>
-      <Button title="NEW Buttons() 로 바꾸기"></Button>
     </View>
     )
   }
@@ -39,19 +42,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   header:{
-    height:'6%',
-    width:'100%',
-    backgroundColor:'#8894ff'
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent:'center',
+    height:'12%',
+    // width:'100%',
+    backgroundColor:'#8894ff',
+    paddingTop:50,
+    paddingVertical:5,
+    paddingHorizontal:15
   },
   title:{
-    height:'5%',
-    width:'100%',
+    width:'80%',
     textAlign:'center',
     color:'white',
     fontSize:30,
     textAlignVertical:"center",
     fontWeight:'bold',
-    backgroundColor:'#8894ff'
   },
+  back:{
+    width:'10%',
+  }
  
 });
