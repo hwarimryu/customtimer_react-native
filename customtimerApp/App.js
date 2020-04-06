@@ -19,7 +19,7 @@ class Main extends Component{
       <Text style={styles.title}>{this.state.title}</Text>
       <Button style={styles.back} iconName="square-o" size='30' color='#fff'/>
       </View>
-      <Home changeTitle={function(title){this.setState({title})}.bind(this)}/>
+      <Home changeTitle={(title)=>{this.setState({title})}}/>
     </View>
     )
   }
