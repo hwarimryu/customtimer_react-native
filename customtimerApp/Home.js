@@ -1,11 +1,11 @@
-<<<<<<< Updated upstream
-import React, { useState, Component } from 'react';
-import { StyleSheet, Text,Separator, View,FlatList, Button, Alert, TouchableOpacity } from 'react-native';
-=======
+
 import React, { Component } from 'react';
 import { StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,AsyncStorage,Modal,TouchableHighlight, Alert } from 'react-native';
->>>>>>> Stashed changes
+
 import CustomTimer from './CustomTimer';
+import Button from './Button';
+import TimePicker from './TimePicker';
+
 //function으로 하니까 안됌...
 
 export default class extends Component{
@@ -16,56 +16,50 @@ export default class extends Component{
             {id:1,title:"타이머1"},{id:2,title:"타이머2"},{id:3,title:"타이머3"},{id:4,title:"타이머4"},{id:5,title:"타이머5"}
         ],
         timerId:-1,
+        modalVisible: false,
+        minute:0,
+        seconds:0
+
     }
 
-<<<<<<< Updated upstream
-=======
+
+    setModalVisible=(visible) =>{
+        this.setState({modalVisible: visible});
+    }
+
     componentDidMount(){
         Alert.alert(this.state.page);
         // AsyncStorage.setItem('timers',JSON.stringify(this.state.timers));
         AsyncStorage.getItem('timers').then((timers)=>this.setState({'timers':JSON.parse(timers)}));
     }
->>>>>>> Stashed changes
+
     openTiemr=(id,title)=>{
         console.log(id);
         this.props.changeTitle(title);
         this.setState({page:"Timer",timerId:id});
+       
+//   저장되어 있는 데이터의 키값 가져오기=> array형태로 반환
+    
     }
+    addNewTimer=()=>{
+        this.setModalVisible(true);
+        // this.openNewTimerForm();
+    }
+    openNewTimerForm=()=>{
 
+        //         AsyncStorage.setItem('timers',JSON.stringify(this.state.timers));
+
+    }
     render() {
         if(this.state.page==="Home"){
             return (
-<<<<<<< Updated upstream
-=======
                 <View style={styles.container}>
-                {/* <Modal
-                // style={{backgroundColor:'black', height: '50%'}}
-                animationType='slide'
-                presentationStyle='overFullScreen'
-                transparent={true}
-                visible={this.state.modalVisible}
-                onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                }}>
-                <View style={styles.newTimerModal}>
-                <TimePicker time={this.state.minute} onMinuteChange={(minute)=>{this.setState({minute})}}></TimePicker>
-                <TimePicker time={this.state.seconds} onMinuteChange={(seconds)=>{this.setState({seconds})}}></TimePicker>
-
-                </View>
-                </Modal> */}
->>>>>>> Stashed changes
                 <FlatList style={styles.customTimerList} data={this.state.timers}
-                  renderItem={({item}) => <TouchableOpacity  onPress={()=>this.openTiemr(item.id,item.title)}><Text style={styles.customTimerItem}> {item.title} </Text></TouchableOpacity>
-                }
-                />
-<<<<<<< Updated upstream
-=======
-                {/* <View style={styles.newBtn}>
-                <Button onPress={()=>this.addNewTimer()} iconName='plus-circle' color='tomato' size='90'/>
-                </View> */}
-                
+                  renderItem={({item}) => 
+                  <TouchableOpacity  onPress={()=>this.openTiemr(item.id,item.title)}>
+                      <Text style={styles.customTimerItem}> {item.title} </Text>
+                    </TouchableOpacity>}/>
                 </View>
->>>>>>> Stashed changes
             );
         }
         else if(this.state.page=="Timer"){
@@ -77,9 +71,14 @@ export default class extends Component{
     }
 }
 const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+        height:'85%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     customTimerList: {
         marginTop:15,
-        height:'80%',
         width:'100%',
     },
     customTimerItem:{
@@ -88,5 +87,25 @@ const styles = StyleSheet.create({
         marginBottom:15,
         fontSize:25,
         textAlign:'center'
-    }
+    },
+    newBtn:{
+        position: 'absolute',
+        width: 90,
+        height: 90,
+        alignItems: 'center',
+        justifyContent: 'center',
+        right: 15,
+        bottom: 25,
+    },
+    newTimerModal:{
+        backgroundColor:'white',
+        opacity:1, 
+        height:'35%',
+        marginTop: '100%',
+        marginHorizontal:'5%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
 });

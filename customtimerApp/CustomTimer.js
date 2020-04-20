@@ -1,8 +1,4 @@
 import React, { useState, Component } from 'react';
-<<<<<<< Updated upstream
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
-
-=======
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert, TextInput, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
 import Button from './Button';
 import TimePicker from './TimePicker';
@@ -35,26 +31,19 @@ class NewTimerForm extends Component{
     }
 }
 let timerInterval;
->>>>>>> Stashed changes
+
 export default class extends Component{
+    
     state={
         id:1,
         title:"",
-<<<<<<< Updated upstream
-        timeList:[{id:1,time:300},{id:2,time:10}],
-    }
-    render(){
-        return(
-        <FlatList style={styles.timeList} data={this.state.timeList} renderItem={({item})=><TouchableOpacity><Text style={styles.timeItem}>{item.time}</Text></TouchableOpacity>}/>
-=======
         timeList:[{id:1,time:3},{id:2,time:10}],
         next_id:0,
         timer_on:false,
-        form_on:false,
-        hours:0,
-        minute:0,
-        seconds:0
+        form_on:false
+
     }
+    
     initialState={
         id:1,
         title:"",
@@ -122,6 +111,7 @@ export default class extends Component{
                 <Button onPress={()=>this.addNewTimer()} iconName='plus-circle' size='45' color='#8894ff' />
                 </View>
                 {this.state.form_on ? <NewTimerForm/>:(<></>)}
+
                 <View style={styles.buttons}>
                     <TextInput></TextInput>
                     {
@@ -140,7 +130,6 @@ export default class extends Component{
                 </View>
 
             </View>
->>>>>>> Stashed changes
         )
     }
 
@@ -173,11 +162,7 @@ const styles = StyleSheet.create({
     
     timeList: {
         marginTop:15,
-<<<<<<< Updated upstream
         height:'80%',
-=======
-        // maxHeight:'70%',
->>>>>>> Stashed changes
         width:'100%',
     },
     timeItem:{
@@ -186,8 +171,7 @@ const styles = StyleSheet.create({
         marginBottom:15,
         fontSize:30,
         textAlign:'center'
-<<<<<<< Updated upstream
-=======
+
     },
     buttons:{
         width:'100%',
@@ -219,6 +203,6 @@ const styles = StyleSheet.create({
         lineHeight:215,
         color:'white'
 
->>>>>>> Stashed changes
+
     }
 });
