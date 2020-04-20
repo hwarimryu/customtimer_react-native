@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     
     timeList: {
         marginTop:15,
-        height:'80%',
+        maxHeight:'80%',
         width:'100%',
     },
     timeItem:{
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
     },
     buttons:{
         width:'100%',
-        // backgroundColor:'black',
         flexDirection: 'row',
         position:'absolute',
         bottom:20,
