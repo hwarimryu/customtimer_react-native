@@ -12,7 +12,8 @@ export default function({onMinuteChange,time}){
         <>
         <Picker
         selectedValue={time} 
-        style={{ height: 50, width: 50 }}
+        style={{ height: 50, width: 50}}
+
         onValueChange={(itemValue, itemIndex) => onMinuteChange(itemValue)}>
  
                     <Picker.Item label="00" value="0" />

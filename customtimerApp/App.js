@@ -1,29 +1,41 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import Button from './Button';
 import Home from './Home';
 
 
 class Main extends Component{
   state={
-    title:"Custom Timer"
+    title:"Custom Timer",
+    page:"Home"
   }
-  changeTitle=(title)=>{
-    
+  
+  reload=()=>{
+    Alert.alert("Home")
+    this.setState({page:'Home'});
+    this.forceUpdate()
   }
   render(){
-    return(<View style={styles.container}>
-      {/* < */}
+    return(
+      <View style={styles.container}>
       <View style={styles.header}>
-      <Button style={styles.back} iconName="chevron-left" size='30' color='#8894ff'/>
+
+{/* delete-outline */}
+{/* delete-empty */}
+      <Button onPress={()=>{this.reload()}} style={styles.back} iconName="arrow-left-thick" size='30' color='#fff'/>
       <Text style={styles.title}>{this.state.title}</Text>
-      <Button style={styles.back} iconName="square-o" size='30' color='#fff'/>
+      <Button style={styles.back} iconName="checkbox-blank-outline" size='30' color='#fff'/>
       </View>
-      <Home changeTitle={(title)=>{this.setState({title})}}/>
+      <Home page={this.state.page} changeTitle={(title)=>{this.setState({title})}}/>
+
     </View>
     )
   }
 }
+
+
+// chevron-down-box-outline
+// chevron-down-box
 
 
 export default function App(){

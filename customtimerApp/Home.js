@@ -1,5 +1,7 @@
+
 import React, { Component } from 'react';
-import { StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,AsyncStorage,Modal,TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,AsyncStorage,Modal,TouchableHighlight, Alert } from 'react-native';
+
 import CustomTimer from './CustomTimer';
 import Button from './Button';
 import TimePicker from './TimePicker';
@@ -9,7 +11,7 @@ import TimePicker from './TimePicker';
 export default class extends Component{
     
     state={
-        page:"Home",
+        page:this.props.page,
         timers:[
             {id:1,title:"타이머1"},{id:2,title:"타이머2"},{id:3,title:"타이머3"},{id:4,title:"타이머4"},{id:5,title:"타이머5"}
         ],
@@ -26,9 +28,11 @@ export default class extends Component{
     }
 
     componentDidMount(){
+        Alert.alert(this.state.page);
         // AsyncStorage.setItem('timers',JSON.stringify(this.state.timers));
         AsyncStorage.getItem('timers').then((timers)=>this.setState({'timers':JSON.parse(timers)}));
     }
+
     openTiemr=(id,title)=>{
         console.log(id);
         this.props.changeTitle(title);
@@ -50,32 +54,11 @@ export default class extends Component{
         if(this.state.page==="Home"){
             return (
                 <View style={styles.container}>
-                <Modal
-                // style={{backgroundColor:'black', height: '50%'}}
-                animationType='slide'
-                presentationStyle='overFullScreen'
-                transparent={true}
-                visible={this.state.modalVisible}
-                onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                }}>
-                <View style={styles.newTimerModal}>
-                <TimePicker time={this.state.minute} onMinuteChange={(minute)=>{this.setState({minute})}}></TimePicker>
-                <TimePicker time={this.state.seconds} onMinuteChange={(seconds)=>{this.setState({seconds})}}></TimePicker>
-
-                </View>
-                </Modal>
                 <FlatList style={styles.customTimerList} data={this.state.timers}
                   renderItem={({item}) => 
                   <TouchableOpacity  onPress={()=>this.openTiemr(item.id,item.title)}>
                       <Text style={styles.customTimerItem}> {item.title} </Text>
-                    </TouchableOpacity>
-                }
-                />
-                <View style={styles.newBtn}>
-                <Button onPress={()=>this.addNewTimer()} iconName='plus-circle' color='tomato' size='90'/>
-                </View>
-                
+                    </TouchableOpacity>}/>
                 </View>
             );
         }

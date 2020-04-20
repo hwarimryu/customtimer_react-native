@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { TouchableOpacity} from "react-native";
-import {FontAwesome} from "@expo/vector-icons";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 function Button({iconName, onPress,size,color}){
     return(
         <TouchableOpacity onPressOut={onPress}>
-            <FontAwesome name={iconName} size={size} color={color}/>
+            <MaterialCommunityIcons name={iconName} size={size} color={color}/>
         </TouchableOpacity>
     )
 }
