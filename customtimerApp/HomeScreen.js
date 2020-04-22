@@ -1,19 +1,15 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,AsyncStorage,Modal,TouchableHighlight, Alert } from 'react-native';
-
-import CustomTimer from './CustomTimer';
 import Button from './Button';
-import TimePicker from './TimePicker';
 
 //function으로 하니까 안됌...
 
-export default class extends Component{
-    
+export default class HomeScreen extends Component{
     state={
-        page:this.props.page,
+        page:'Home',
         timers:[
-            {id:1,title:"타이머1"},{id:2,title:"타이머2"},{id:3,title:"타이머3"},{id:4,title:"타이머4"},{id:5,title:"타이머5"}
+            {id:1,title:"test_timer1"},{id:2,title:"test_timer2"},{id:3,title:"test_timer3"},{id:4,title:"test_timer4"},{id:5,title:"test_timer5"}
         ],
         timerId:-1,
         modalVisible: false,
@@ -21,7 +17,6 @@ export default class extends Component{
         seconds:0
 
     }
-
 
     setModalVisible=(visible) =>{
         this.setState({modalVisible: visible});
@@ -51,29 +46,27 @@ export default class extends Component{
 
     }
     render() {
-        if(this.state.page==="Home"){
             return (
+            
                 <View style={styles.container}>
                 <FlatList style={styles.customTimerList} data={this.state.timers}
                   renderItem={({item}) => 
-                  <TouchableOpacity  onPress={()=>this.openTiemr(item.id,item.title)}>
+                  <TouchableOpacity 
+                       onPress={()=>this.props.navigation.navigate('CustomTimer',{
+                            title:item.title,
+                       })}>
                       <Text style={styles.customTimerItem}> {item.title} </Text>
-                    </TouchableOpacity>}/>
+                </TouchableOpacity>}/>
+                <View style={styles.newBtn}>
+                <Button iconName='plus-circle' color='tomato' size='80'/>
+                </View>
                 </View>
             );
-        }
-        else if(this.state.page=="Timer"){
-            return(
-                <CustomTimer/>
-            )
-        }
-        
     }
 }
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        height:'85%',
         justifyContent: 'center',
         alignItems: 'center',
     },

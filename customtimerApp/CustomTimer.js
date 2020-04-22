@@ -139,19 +139,17 @@ const styles = StyleSheet.create({
         width:'100%',
         flex:1,
         alignItems:'center',
-
     },
     settingTop:{
         width:'100%',
         flexDirection:'row',
-        // backgroundColor:'#ffcf00',
-
-
+        marginTop:-1.5
     },
     settingItem:{
         flex:1,
         padding:10,
         fontSize:50,
+        // backgroundColor:'#ff'
         borderColor:'#8894ff',
         borderWidth:1.5,
         borderBottomWidth:3,
