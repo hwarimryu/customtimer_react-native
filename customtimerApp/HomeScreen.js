@@ -9,7 +9,7 @@ export default class HomeScreen extends Component{
     state={
         page:'Home',
         timers:[
-            {id:1,title:"test_timer1"},{id:2,title:"test_timer2"},{id:3,title:"test_timer3"},{id:4,title:"test_timer4"},{id:5,title:"test_timer5"}
+            // {id:1,title:"test_timer1"},{id:2,title:"test_timer2"},{id:3,title:"test_timer3"},{id:4,title:"test_timer4"},{id:5,title:"test_timer5"}
         ],
         timerId:-1,
         modalVisible: false,
@@ -38,12 +38,15 @@ export default class HomeScreen extends Component{
     }
     addNewTimer=()=>{
         this.setModalVisible(true);
-        // this.openNewTimerForm();
     }
     openNewTimerForm=()=>{
-
-        //         AsyncStorage.setItem('timers',JSON.stringify(this.state.timers));
-
+        Alert.prompt('새 타이머 이름','',(new_title)=>{
+            let timers = this.state.timers;
+            timers.push({id:timers.length+1,title:new_title});
+            this.setState({timers});
+            AsyncStorage.setItem('timers',JSON.stringify(this.state.timers));
+            console.log(timers.length);
+        })
     }
     render() {
             return (
@@ -53,12 +56,13 @@ export default class HomeScreen extends Component{
                   renderItem={({item}) => 
                   <TouchableOpacity 
                        onPress={()=>this.props.navigation.navigate('CustomTimer',{
+                           id:item.id,
                             title:item.title,
                        })}>
                       <Text style={styles.customTimerItem}> {item.title} </Text>
                 </TouchableOpacity>}/>
                 <View style={styles.newBtn}>
-                <Button iconName='plus-circle' color='tomato' size='80'/>
+                <Button iconName='plus-circle' color='tomato' size='80' onPress={()=> this.openNewTimerForm()}/>
                 </View>
                 </View>
             );
@@ -89,16 +93,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         right: 15,
         bottom: 25,
-    },
-    newTimerModal:{
-        backgroundColor:'white',
-        opacity:1, 
-        height:'35%',
-        marginTop: '100%',
-        marginHorizontal:'5%',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 
 });
