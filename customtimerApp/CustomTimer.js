@@ -65,14 +65,13 @@ class NewTimerForm extends Component{
     }
 }
 let timerInterval;
-
+let next_id=1;
 export default class extends Component{
     
     state={
         id:'time_list_'+this.props.route.params.id,
         title:"",
         timeList:[],
-        next_id:0,
         timer_on:false,
         form_on:false
 
@@ -81,7 +80,6 @@ export default class extends Component{
     initialState={
         id:'time_list_'+this.props.route.params.id,
         timeList:[],
-        next_id:0,
         timer_on:false,
         form_on:false
 
@@ -99,18 +97,27 @@ export default class extends Component{
     }
     startTimer=  (timeId)=> {
         console.log("startTimer");
+        if(next_id>this.state.timeList.length) console.log("!!")
+        console.log(this.state.timeList.length)
+        console.log(next_id)
         this.state.timeList.filter( (e)=>{
             if(e.id===timeId){
-                this.setState({next_id:timeId+1,timer_on:true});
+                
+                this.setState({timer_on:true});
                 timerInterval= setInterval(()=>{
                     e.time--;
-                    this.setState(this.state);
-                    if(e.time<=0){
+                    if(e.time==-1){
+
+                    }else if(e.time>0){
+                        this.setState(this.state);
+                    }else{
+                        next_id=timeId+1;
                         this.nextTimer();
                     }
                 },1000);
             }
         });
+
     }
     stopTimer=()=>{
         console.log("stopTimer");
@@ -123,13 +130,15 @@ export default class extends Component{
         this.setState({timer_on:false});
     }
     nextTimer=()=>{
+
         this.pauseTimer();
-        this.startTimer(this.state.next_id);
+
+        this.startTimer(next_id);
     }
     setTimerInitial=()=>{
         console.log("setInitial");
         this.setState(this.initialState);
-        this.setState({timer_on:false});
+        // this.setState({timer_on:false});
 
     }
     
@@ -137,7 +146,7 @@ export default class extends Component{
     addNewTime=(new_time)=>{
         this.initialState.timeList.push({id:this.initialState.timeList.length+1,time:new_time})
         AsyncStorage.setItem(this.state.id,JSON.stringify(this.initialState.timeList))
-        this.setState({timeList:this.initialState.timeList})
+        this.setState(this.initialState)
     }
     openNewTimeForm=()=>{
         this.setState({form_on:true});
