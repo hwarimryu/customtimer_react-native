@@ -66,19 +66,19 @@ class NewTimerForm extends Component{
 }
 let timerInterval;
 let next_id=1;
+let time_list=[];
 export default class extends Component{
     
     state={
         id:'time_list_'+this.props.route.params.id,
         title:"",
-        timeList:[],
+        time_list:[],
         timer_on:false,
         form_on:false
 
     }
     
     initialState={
-        id:'time_list_'+this.props.route.params.id,
         timeList:[],
         timer_on:false,
         form_on:false
@@ -89,16 +89,17 @@ export default class extends Component{
         console.log(this.props.route.params.id)
         // AsyncStorage.setItem('time_list_1',JSON.stringify([{id:1,time:3},{id:2,time:2}]));
         // AsyncStorage.getItem(this.state.id).then((timeList)=>this.setState({'timeList':JSON.parse(timeList)}));
-        AsyncStorage.getItem(this.state.id).then((timeList)=>{
-            this.setState({'timeList':JSON.parse(timeList)})
-            this.initialState.timeList=JSON.parse(timeList)
+        AsyncStorage.getItem(this.state.id).then((res)=>{
+            time_list= JSON.parse(res);
+            this.setState({'time_list':time_list})
+            time_list=JSON.parse(time_list)
         });
 
     }
     startTimer=  (timeId)=> {
         console.log("startTimer");
-        if(next_id>this.state.timeList.length) console.log("!!")
-        console.log(this.state.timeList.length)
+        if(next_id>time_list.length) console.log("!!")
+        console.log(time_list.length)
         console.log(next_id)
         this.state.timeList.filter( (e)=>{
             if(e.id===timeId){
