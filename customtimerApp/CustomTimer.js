@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'center',
         position:'absolute',
-        top:'40%',
+        top:'25%',
         borderRadius:35,
     },
     timePicker:{
