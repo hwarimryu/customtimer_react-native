@@ -10,10 +10,10 @@ function Button({iconName, onPress,size,color}){
     )
 }
 
-Button.protoTypes={
-    iconName:PropTypes.string.isRequired,
-    onPress:PropTypes.func.isRequired
-}
+// Button.protoTypes={
+//     iconName:PropTypes.string.isRequired,
+//     onPress:PropTypes.func.isRequired
+// }
 export default Button;
 
 // repeat

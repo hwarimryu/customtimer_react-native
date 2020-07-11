@@ -1,27 +1,21 @@
-import React, { useState, Component } from 'react';
+import React, { Component } from 'react';
 import { AsyncStorage,StyleSheet, Text, View, FlatList, TouchableOpacity, Alert, TextInput, TouchableWithoutFeedback, TouchableHighlight, Systrace } from 'react-native';
-import Button from './Button';
-import TimePicker from './TimePicker';
+import Button from '../Button';
+import TimePicker from '../components/TimePicker';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
-function timeItem(time){    
-    let seconds = time%60;
-    let min=0;//(time/60);
-    let hours=0//time/3600;
+function timeItem(time){  
+    var hours=time/3600;
+    var min=Math.floor(time/60);
+    var seconds = time%60;
 
     if(seconds<10){
         seconds = '0'+seconds.toFixed(0);
     }else seconds=seconds.toFixed(0);
 
-    if(time>3600){
-        hours=time/3600;
-    }
     if(hours<10){
         hours = '0'+hours.toFixed(0);
     }else hours=hours.toFixed(0);
 
-    if(time>60){
-        min=(time/60)%60;
-    }
     if(min<10){
         min = '0'+min.toFixed(0);
     }else min=min.toFixed(0);
@@ -65,8 +59,14 @@ class NewTimerForm extends Component{
     }
 }
 let timerInterval;
-let next_id=1;
-let time_list=[];
+let cur=1;
+let length=0;
+let initialState={
+    time_list:[],
+    timer_on:false,
+    form_on:false
+
+}
 export default class extends Component{
     
     state={
@@ -78,43 +78,44 @@ export default class extends Component{
 
     }
     
-    initialState={
-        timeList:[],
-        timer_on:false,
-        form_on:false
-
-    }
+    
  
     componentDidMount=()=>{
         console.log(this.props.route.params.id)
         // AsyncStorage.setItem('time_list_1',JSON.stringify([{id:1,time:3},{id:2,time:2}]));
-        // AsyncStorage.getItem(this.state.id).then((timeList)=>this.setState({'timeList':JSON.parse(timeList)}));
         AsyncStorage.getItem(this.state.id).then((res)=>{
-            time_list= JSON.parse(res);
+            if(res==null) return
+            var time_list = JSON.parse(res);
             this.setState({'time_list':time_list})
-            time_list=JSON.parse(time_list)
+            initialState.time_list= JSON.parse(res);
+            length = initialState.time_list.length;
+            // initialState.time_list=time_list
+            // time_list=JSON.parse(time_list)
         });
 
     }
     startTimer=  (timeId)=> {
         console.log("startTimer");
-        if(next_id>time_list.length) console.log("!!")
-        console.log(time_list.length)
-        console.log(next_id)
-        this.state.timeList.filter( (e)=>{
+       
+        this.state.time_list.filter( (e)=>{
+            console.log(e.id+" "+ cur +" "+e.time);
+
             if(e.id===timeId){
-                
                 this.setState({timer_on:true});
+                // pause, stop 버튼 활성화
+                // start 버튼 비활성화
+
                 timerInterval= setInterval(()=>{
                     e.time--;
-                    if(e.time==-1){
+                    console.log(e.time);
 
-                    }else if(e.time>0){
-                        this.setState(this.state);
-                    }else{
-                        next_id=timeId+1;
-                        this.nextTimer();
+                    if(e.time<=0){
+                        cur++;
+                        if(cur>length) this.stopTimer();
+                        else this.nextTimer();
                     }
+                    this.setState(this.state);
+                   
                 },1000);
             }
         });
@@ -131,23 +132,22 @@ export default class extends Component{
         this.setState({timer_on:false});
     }
     nextTimer=()=>{
-
         this.pauseTimer();
-
-        this.startTimer(next_id);
+        this.startTimer(cur);
     }
     setTimerInitial=()=>{
         console.log("setInitial");
-        this.setState(this.initialState);
-        // this.setState({timer_on:false});
-
+        this.setState(initialState);
+        cur=1;
     }
     
 
-    addNewTime=(new_time)=>{
-        this.initialState.timeList.push({id:this.initialState.timeList.length+1,time:new_time})
-        AsyncStorage.setItem(this.state.id,JSON.stringify(this.initialState.timeList))
-        this.setState(this.initialState)
+    addNewTime=async (new_time)=>{
+        this.state.time_list.push({id:initialState.time_list.length+1,time:new_time})
+
+       await AsyncStorage.setItem(this.state.id,JSON.stringify(initialState.time_list))
+        this.setState(initialState)
+
     }
     openNewTimeForm=()=>{
         this.setState({form_on:true});
@@ -165,7 +165,7 @@ export default class extends Component{
                 <TouchableHighlight style={styles.settingItem}><Text style={{fontSize:20, fontWeight:'bold'}} >SOUND   <MaterialCommunityIcons name='music-off'size='25' color='black'/></Text></TouchableHighlight>
                 </View>
                 <View  style={styles.timeList}>
-                <FlatList  data={this.state.timeList} renderItem={({item})=>
+                <FlatList  data={this.state.time_list} renderItem={({item})=>
                     <TouchableOpacity>
                         {timeItem(item.time)}
                         {/* <TimeItem time={item.time}/> */}
@@ -180,12 +180,12 @@ export default class extends Component{
                     <TextInput></TextInput>
                     {
                         this.state.timer_on ? (<>
-                            <Button iconName='play-circle' onPress={()=>this.startTimer(1)} size='70' color='#aaa'></Button>
+                            <Button iconName='play-circle' onPress={()=>this.startTimer(cur)} size='70' color='#aaa'></Button>
                             <Button iconName='pause-circle' onPress={()=>this.pauseTimer()} size='70' color='#ffcf00'></Button>
                             <Button iconName='stop-circle' onPress={()=>this.stopTimer()} size='70' color='tomato'></Button>
                         </>):
                         (<>
-                            <Button iconName='play-circle' onPress={()=>this.startTimer(1)} size='70' color='tomato'></Button>
+                            <Button iconName='play-circle' onPress={()=>this.startTimer(cur)} size='70' color='tomato'></Button>
                             <Button iconName='pause-circle' onPress={()=>this.pauseTimer()} size='70' color='#aaa'></Button>
                             <Button iconName='stop-circle' onPress={()=>this.stopTimer()} size='70' color='#aaa'></Button>
                         </>
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     
     timeList: {
         marginTop:15,
-        maxHeight:'70%',
+        maxHeight:'60%',
         width:'100%',
     },
     timeItem:{
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     },
     
     addButton:{
-        paddingTop:15,
+        paddingTop:10,
     },
     timerForm:{
         backgroundColor:'white',
