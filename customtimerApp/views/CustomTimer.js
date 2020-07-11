@@ -3,6 +3,11 @@ import { AsyncStorage,StyleSheet, Text, View, FlatList, TouchableOpacity, Alert,
 import Button from '../Button';
 import TimePicker from '../components/TimePicker';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+import { Audio } from 'expo-av';
+
+const soundObject = new Audio.Sound();
+soundObject.loadAsync(require('../assets/sounds/note.mp3'))
+
 function timeItem(time){  
     var hours=time/3600;
     var min=Math.floor(time/60);
@@ -94,7 +99,7 @@ export default class extends Component{
         });
 
     }
-    startTimer=  (timeId)=> {
+    startTimer=   (timeId)=> {
         console.log("startTimer");
        
         this.state.time_list.filter( (e)=>{
@@ -108,10 +113,20 @@ export default class extends Component{
                 timerInterval= setInterval(()=>{
                     e.time--;
                     console.log(e.time);
+                    soundObject.stopAsync()                   
 
                     if(e.time<=0){
+                        try {
+                             soundObject.playAsync()                   
+                                     // Your sound is playing!
+                          } catch (error) {
+                            // An error occurred!
+                          }
                         cur++;
-                        if(cur>length) this.stopTimer();
+                        if(cur>length) {
+                            this.stopTimer();
+                        
+                        }
                         else this.nextTimer();
                     }
                     this.setState(this.state);
@@ -146,7 +161,6 @@ export default class extends Component{
         this.state.time_list.push({id:initialState.time_list.length+1,time:new_time})
 
        await AsyncStorage.setItem(this.state.id,JSON.stringify(initialState.time_list))
-        this.setState(initialState)
 
     }
     openNewTimeForm=()=>{
