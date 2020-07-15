@@ -4,6 +4,10 @@ import Button from '../Button';
 import TimePicker from '../components/TimePicker';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import { Audio } from 'expo-av';
+// import * as BackgroundFetch from 'expo-background-fetch';
+
+import BackgroundTimer from 'react-native-background-timer';
+
 
 const soundObject = new Audio.Sound();
 soundObject.loadAsync(require('../assets/sounds/note.mp3'))
@@ -110,7 +114,11 @@ export default class extends Component{
                 // pause, stop 버튼 활성화
                 // start 버튼 비활성화
 
-                timerInterval= setInterval(()=>{
+                timerInterval= 
+                
+                
+                // BackgroundTimer.runBackgroundTimer(()=>{
+                setInterval(()=>{
                     e.time--;
                     console.log(e.time);
                     soundObject.stopAsync()                   
@@ -139,6 +147,7 @@ export default class extends Component{
     stopTimer=()=>{
         console.log("stopTimer");
         clearInterval(timerInterval);
+        // BackgroundTimer.stopBackgroundTimer();
         this.setTimerInitial();
     }
     pauseTimer=()=>{
@@ -150,8 +159,9 @@ export default class extends Component{
         this.pauseTimer();
         this.startTimer(cur);
     }
+
     setTimerInitial=()=>{
-        console.log("setInitial");
+        console.log("setInitial"+ initialState);
         this.setState(initialState);
         cur=1;
     }
@@ -182,7 +192,6 @@ export default class extends Component{
                 <FlatList  data={this.state.time_list} renderItem={({item})=>
                     <TouchableOpacity>
                         {timeItem(item.time)}
-                        {/* <TimeItem time={item.time}/> */}
                     </TouchableOpacity>}/>
                 </View>
                 <View style={styles.addButton} >
