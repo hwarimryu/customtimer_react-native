@@ -2,7 +2,8 @@
 
 다양하게 시간과 반복 횟수를 설정해 한번에 연속적으로 실행시킬 수 있는 커스텀 타이머 앱
 - React Native
-![screenshot]
+
+**screenshot**
 
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-16 at 00.59.32.png" width="20%"></img>
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-16 at 01.00.03.png" width="20%"></img>
