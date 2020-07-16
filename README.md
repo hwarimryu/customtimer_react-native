@@ -12,7 +12,7 @@
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-16 at 01.01.07.png" width="25%"></img>
 
 
-### 모듈 사용시 기억할 
+### 모듈 사용시 확인할 거 
 - AsyncStorage
  String만 저장 가능하기 때문에 JSON Object로 String으로 변환해서 저장해야한다
  -> primary key 겹치지 않게 해줘야함.
