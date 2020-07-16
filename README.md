@@ -14,17 +14,16 @@
 
 ### 모듈 사용시 확인할 거 
 - AsyncStorage
- String만 저장 가능하기 때문에 JSON Object로 String으로 변환해서 저장해야한다
- -> primary key 겹치지 않게 해줘야함.
- 
+: String만 저장 가능하기 때문에 JSON Object로 String으로 변환해서 저장해야한다 -> primary key 겹치지 않게 해줘야함.
+
 - react-native-sound-player
-  재생할 음원 파일 main위치에 따로 넣어줘야함!!
+: 재생할 음원 파일 main위치에 따로 넣어줘야함!!
   
 - react-native-backgroud-timer
-  BackroundTimer.setInteval(..) 로 해야 여러 개 하나를 중간에 끄고 다시 키고 할 수 있음!
-  BackroundTimer.runBackroundTimer(..)는 x
+: BackroundTimer.setInteval(..) 로 해야 여러 개 하나를 중간에 끄고 다시 키고 할 수 있음!
+BackroundTimer.runBackroundTimer(..)는 x
   
-- react-native-vector-icons/MaterialCommunityIcons 
-  MaterialCommunityIcons랑 아이콘 패키지 이름들 Info.plist에 입력해야함.
+- react-native-vector-icons/MaterialCommunityIcons
+: MaterialCommunityIcons랑 아이콘 패키지 이름들 Info.plist에 입력해야함.
 
  
