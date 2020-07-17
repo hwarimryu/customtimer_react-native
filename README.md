@@ -6,7 +6,6 @@
 - 타이머 생성, 삭제<br>
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-16 at 00.59.32.png" width="25%"></img>
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-16 at 01.00.03.png" width="25%"></img>
-<br>
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-16 at 01.00.11.png" width="25%"></img>
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-17 at 17.55.10.png" width="25%"></img>
 <br>
