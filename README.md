@@ -19,19 +19,6 @@
 - 반복 설정<br>
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-17 at 17.50.25.png" width="25%"></img>
 
-### db structure
-next_timer_id_seq:0
-(timer_id 겹치지 않게 seq로 정함.)
-
-timers:[
- { timer_id: time_list_next_timer_id_seq,
-   timer_title: string
- },...
-
-time_list_#:{
- id: string,(timer의 timer_id)
- time_list:[{id:1,time:number},{id:2,time:number},...]
-}
 
 
 ### 모듈 사용시 확인할 거 
