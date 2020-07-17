@@ -37,11 +37,12 @@ class TimerItem extends Component{
 
 export default class HomeScreen extends Component{
     state={
-        timers:[
+        timers:[{}
             // {id:1,title:"test_timer1"},{id:2,title:"test_timer2"},{id:3,title:"test_timer3"},{id:4,title:"test_timer4"},{id:5,title:"test_timer5"}
         ],
         modalVisible: false,
         selectClicked:false,
+        next_id_seq:''
         
     }
 
@@ -50,20 +51,29 @@ export default class HomeScreen extends Component{
     }
 
     componentDidMount= async()=>{
+        // AsyncStorage.setItem('next_id_seq','1');
+
         // AsyncStorage.setItem('timers',JSON.stringify(this.state.timers));
         // console.log(this.props.navigation.header)
         // React.useLayoutEffect(()=>{
             
         // })
         await AsyncStorage.getItem('timers').then((timers)=>this.setState({'timers':JSON.parse(timers)}));
+        await AsyncStorage.getItem('next_id_seq').then((num)=>this.setState({"next_id_seq":num}));
+
     }
 
     openNewTimerForm=()=>{
         Alert.prompt('새 타이머 이름','',async (new_title)=>{
-            let timers = this.state.timers;
-            timers.push({id:new_title,title:new_title});
+            var timers = this.state.timers;
+            var next_id_seq = this.state.next_id_seq
+            timers.push({id:'time_list'+next_id_seq,title:new_title});
+            next_id_seq=String(Number(next_id_seq)+1);
             await AsyncStorage.setItem('timers',JSON.stringify(timers));
-            this.setState({timers});
+            await AsyncStorage.setItem('next_id_seq',next_id_seq);
+            this.state.timers=timers;
+            this.state.next_id_seq=next_id_seq;
+            this.setState();
         })
     }
 
@@ -77,22 +87,11 @@ export default class HomeScreen extends Component{
         let timers = this.state.timers;
 
         timers.splice(timers.indexOf(item),1);
-        await AsyncStorage.removeItem('time_list_'+item.title)
+        await AsyncStorage.removeItem(item.title)
         await AsyncStorage.setItem('timers',JSON.stringify(timers));
 
         this.setState({timers:timers})
     }
-    
-    deleteSelectedTimer=async(item_list)=>{
-        item_list.sort((a,b)=>a-b);
-        let timers = this.state.timers;
-        timers.forEach((idx)=>{
-            timers.splice(idx,1);
-        })
-        await AsyncStorage.setItem('timers',JSON.stringify(timers));
-        this.setState({timers:timers})
-    }
-
     
     render() {
        

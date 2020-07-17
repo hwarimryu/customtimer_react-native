@@ -113,8 +113,8 @@ let repeat=1;
 export default class extends Component{
     
     state={
-        id:'time_list_'+this.props.route.params.id,
-        title:"",
+        id:this.props.route.params.id,
+        title:this.props.route.params.title,
         time_list:[],
         timer_on:false,
         form_on:false,
