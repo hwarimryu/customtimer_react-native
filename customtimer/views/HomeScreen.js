@@ -1,6 +1,8 @@
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,AsyncStorage,Modal,TouchableHighlight, Alert, CheckBox } from 'react-native';
+import { AsyncStorage,StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,Modal,TouchableHighlight, Alert, CheckBox } from 'react-native';
+// import AsyncStorage from '@react-native-community/async-storage';
+
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../components/Button.js';
@@ -11,8 +13,7 @@ class TimerItem extends Component{
     state={
         title:this.props.item.title,
         id: this.props.item.id,
-        isDeleteOn:false,
-        
+        isDeleteOn:false,        
     }
     render(){
         return(
@@ -40,7 +41,8 @@ export default class HomeScreen extends Component{
             // {id:1,title:"test_timer1"},{id:2,title:"test_timer2"},{id:3,title:"test_timer3"},{id:4,title:"test_timer4"},{id:5,title:"test_timer5"}
         ],
         modalVisible: false,
-        selectClicked:false
+        selectClicked:false,
+        
     }
 
     setModalVisible=(visible) =>{

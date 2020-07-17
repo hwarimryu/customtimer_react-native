@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,AsyncStorage,Modal,TouchableHighlight, Alert, CheckBox } from 'react-native';
+import { AsyncStorage,StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,Modal,TouchableHighlight, Alert, CheckBox } from 'react-native';
+// import AsyncStorage from '@react-native-community/async-storage';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../components/Button.js';
@@ -41,11 +42,9 @@ function timeItem(time,isDeleteOn){
         </GestureRecognizer>
        )
    )
-    
-    // return (
-    //     <Text style={styles.timeItem}>{hours} : {min} : {seconds}</Text>
-    // )
 }
+
+
 class NewTimerForm extends Component{
 
     state={
@@ -80,15 +79,37 @@ class NewTimerForm extends Component{
         )
     }
 }
+
+class SetRepeatForm extends Component{
+    state={
+        num:0
+    }
+    render(){
+        return (
+            <View  style={styles.timerForm}>
+                <View style = {styles.timePicker}>
+                <TimePicker time={this.state.num} onMinuteChange={(num)=>{this.setState({num})}}></TimePicker>
+                </View>
+
+                <View style={styles.formButtons}>
+                <TouchableOpacity onPress={()=>this.props.cancle()} style={{flex:1}}><Text style={styles.formButton}>CANCLE</Text></TouchableOpacity>
+                <Text style={{flex:1}}/>
+                <TouchableOpacity onPress={()=>{this.props.confirm(this.state.num)}} style={{flex:1}}><Text style={styles.formButton}>OK</Text></TouchableOpacity>
+                </View>
+            </View>
+        )
+    }
+    
+}
 let timerInterval;
 let cur=1;
 let length=0;
 let initialState={
     time_list:[],
     timer_on:false,
-    form_on:false
-
+    form_on:false,
 }
+let repeat=1;
 export default class extends Component{
     
     state={
@@ -96,8 +117,9 @@ export default class extends Component{
         title:"",
         time_list:[],
         timer_on:false,
-        form_on:false
-
+        form_on:false,
+        repeat_form_on:false,
+        repeat: 1
     }
 
     componentDidMount=()=>{
@@ -111,8 +133,8 @@ export default class extends Component{
 
             var time_list = JSON.parse(res);
             this.setState({'time_list':time_list})
-            initialState.time_list= JSON.parse(res);
-            length = initialState.time_list.length;
+            initialState.time_list= res
+            length = this.state.time_list.length;
             // initialState.time_list=time_list
             // time_list=JSON.parse(time_list)
         });
@@ -138,6 +160,8 @@ export default class extends Component{
     startTimer=   (timeId)=> {
         console.log("startTimer");
        
+        // repeat = this.state.repeat;
+
         this.state.time_list.filter( (e)=>{
             console.log(e.id+" "+ cur +" "+e.time);
 
@@ -145,23 +169,32 @@ export default class extends Component{
                 this.setState({timer_on:true});
                 // pause, stop 버튼 활성화
                 // start 버튼 비활성화
+                console.log(initialState.time_list);
+
                 timerInterval=BackgroundTimer.setInterval(()=>{
-                // timerInterval= setInterval(()=>{
                     e.time--;
                     console.log(e.time);
-                    // soundObject.stopAsync()                   
-                    // whoosh.stop();
 
                     if(e.time<=0){
                         this.playBell();
-                        // this,getInfo()
+
                         cur++;
+                       
                         if(cur>length) {
-                            this.stopTimer();
-                            return;
+                            if(repeat>=this.state.repeat){
+                                this.stopTimer()                             
+                                return
+                            }else {
+                                console.log("repeat: "+repeat);
+                                this.state.time_list =JSON.parse(initialState.time_list);
+                                cur=1
+                                repeat++;
+                                this.nextTimer();
+                            }
                         }
                         else this.nextTimer();
                     }
+
                     this.setState(this.state);
                    
                 },1000);
@@ -169,12 +202,12 @@ export default class extends Component{
         });
 
     }
+    
     stopTimer=()=>{
         console.log("stopTimer");
         // clearInterval(timerInterval);
         BackgroundTimer.clearInterval(timerInterval);
-
-        this.setTimerInitial();
+        this.setTimerInitial()
     }
     pauseTimer=()=>{
         console.log("pauseTimer");
@@ -186,12 +219,32 @@ export default class extends Component{
         this.startTimer(cur);
     }
     setTimerInitial=()=>{
-        console.log("setInitial"+initialState.time_list[0].time);
-        this.state.time_list = initialState.time_list.splice(0,initialState.time_list.length)
-        this.setState({'timer_on':false});
+        console.log("setInitial");
+        this.state.time_list =JSON.parse(initialState.time_list);
+        this.state.timer_on=false
+        this.setState(this.state);
         cur=1;
+        repeat=1;
     }
     
+    copyObj=(obj)=> {
+        var copy = {};
+        if (Array.isArray(obj)) {
+          copy = obj.slice().map((v) => {
+            return copyObj(v);
+          });
+        } else if (typeof obj === 'object' && obj !== null) {
+          for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) {
+              copy[attr] = copyObj(obj[attr]);
+            }
+          }
+        } else {
+          copy = obj;
+        }
+        return copy;
+      }
+
 
     addNewTime=async (new_time)=>{
         initialState.time_list.push({id:initialState.time_list.length+1,time:new_time})
@@ -213,12 +266,33 @@ export default class extends Component{
     cancleNewTime=()=>{
         this.setState({form_on:false});
     }
+
+
+    setRepeat=()=>{
+        this.setState({repeat_form_on:true})
+    }
+    cancleSetRepeat=()=>{
+        this.setState({repeat_form_on:false})
+
+    }
+    
+
+    // openNewTimeForm=()=>{
+    //     this.setState({form_on:true});
+    // }
+    // cancleNewTime=()=>{
+    //     this.setState({form_on:false});
+    // }
+
+
+
+
     render(){
         return(
             <View style={styles.container}>
                 <View style={styles.settingTop}>
                     
-                <TouchableHighlight style={styles.settingItem}>< Text style={{fontSize:20, fontWeight:'bold'}}>REPEAT   5</Text>
+        <TouchableHighlight style={styles.settingItem} onPress={()=>this.setRepeat()}>< Text style={{fontSize:20, fontWeight:'bold'}}>REPEAT   {this.state.repeat}</Text>
                 </TouchableHighlight>
                 <TouchableHighlight style={styles.settingItem}><Text style={{fontSize:20, fontWeight:'bold'}} >SOUND   <Icon name='music-off'size={25} color='black'/></Text></TouchableHighlight>
                 </View>
@@ -233,6 +307,7 @@ export default class extends Component{
                 <Button onPress={()=>this.openNewTimeForm()} iconName='plus-circle' size={45} color='#8894ff' />
                 </View>
                 {this.state.form_on ? <NewTimerForm addNewTime={(new_time)=>this.addNewTime(new_time)} cancleNewTime={()=>this.cancleNewTime()}/>:(<></>)}
+                {this.state.repeat_form_on ? <SetRepeatForm confirm={(num)=>this.setState({repeat:num,repeat_form_on:false})} cancle={()=>this.cancleSetRepeat()}/>:(<></>)}
 
                 <View style={styles.buttons}>
                     {/* <TextInput></TextInput> */}
