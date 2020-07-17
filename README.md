@@ -15,7 +15,8 @@
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-16 at 01.00.57.png" width="25%"></img>
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-16 at 01.01.07.png" width="25%"></img>
 <br>
-- 반복설정<br>
+
+- 반복 설정<br>
 <img src="/screenshots/Simulator Screen Shot - iPhone 11 - 2020-07-17 at 17.50.25.png" width="25%"></img>
 
 
