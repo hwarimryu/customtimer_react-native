@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     },
     customTimerItem:{
         flex:1,
+        height:"100%",
         flexDirection:'row',
     },
     customTimerTitle:{       
