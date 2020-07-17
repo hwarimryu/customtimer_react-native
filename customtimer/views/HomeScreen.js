@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../components/Button.js';
 
 
-
 class TimerItem extends Component{
     state={
         title:this.props.item.title,
@@ -37,7 +36,7 @@ class TimerItem extends Component{
 
 export default class HomeScreen extends Component{
     state={
-        timers:[{}
+        timers:[
             // {id:1,title:"test_timer1"},{id:2,title:"test_timer2"},{id:3,title:"test_timer3"},{id:4,title:"test_timer4"},{id:5,title:"test_timer5"}
         ],
         modalVisible: false,
@@ -52,12 +51,9 @@ export default class HomeScreen extends Component{
 
     componentDidMount= async()=>{
         // AsyncStorage.setItem('next_id_seq','1');
-
         // AsyncStorage.setItem('timers',JSON.stringify(this.state.timers));
         // console.log(this.props.navigation.header)
-        // React.useLayoutEffect(()=>{
-            
-        // })
+       
         await AsyncStorage.getItem('timers').then((timers)=>this.setState({'timers':JSON.parse(timers)}));
         await AsyncStorage.getItem('next_id_seq').then((num)=>this.setState({"next_id_seq":num}));
 
@@ -71,18 +67,10 @@ export default class HomeScreen extends Component{
             next_id_seq=String(Number(next_id_seq)+1);
             await AsyncStorage.setItem('timers',JSON.stringify(timers));
             await AsyncStorage.setItem('next_id_seq',next_id_seq);
-            this.state.timers=timers;
-            this.state.next_id_seq=next_id_seq;
-            this.setState();
+            this.setState({next_id_seq,timers});
         })
     }
 
-    clickSelectButton=()=>{
-
-        if(!this.state.selectClicked){ this.setState({ selectClicked:true})}
-        else{ this.setState({ selectClicked:false})}
-        console.log(this.state.selectClicked)
-    }
     deleteTimer= async (item)=>{
         let timers = this.state.timers;
 
