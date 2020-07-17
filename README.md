@@ -13,7 +13,7 @@
 
 
 ### 모듈 사용시 확인할 거 
-- AsyncStorage
+- AsyncStorage(@react-native-community/async-storage 로 바뀜)
 : String만 저장 가능하기 때문에 JSON Object로 String으로 변환해서 저장해야한다 -> primary key 겹치지 않게 해줘야함.
 
 - react-native-sound-player
