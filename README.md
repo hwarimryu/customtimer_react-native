@@ -26,4 +26,6 @@ BackroundTimer.runBackroundTimer(..)는 x
 - react-native-vector-icons/MaterialCommunityIcons
 : MaterialCommunityIcons랑 아이콘 패키지 이름들 Info.plist에 입력해야함.
 
- 
+### 공부
+- initial 타이머 Reset할 때 : 처음 화면 불러올 때 AsyncStorage에서 get한 결과물을 파싱해서 obj로 저장해둬서 reset할 때 내용 복사가 제대로 안되서 오류남.
+\n ->  data 스트링 그래로 저장해두고 reset할 때 Json.parse(..)로 하면 쉬움.
