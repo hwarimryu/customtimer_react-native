@@ -5,7 +5,7 @@ import { AsyncStorage,StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,M
 
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Button from '../components/Button.js';
+import Button from '../src/components/Button.js';
 
 
 class TimerItem extends Component{
@@ -82,7 +82,7 @@ export default class HomeScreen extends Component{
     }
     
     render() {
-       
+    //    console.log(this.props.isPlaying)
     return (
                 
             this.state.selectClicked? (

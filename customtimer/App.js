@@ -12,13 +12,17 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import HomeScreen from './views/HomeScreen.js';
 import CustomTimer from './views/CustomTimer.js';
+import {createStore} from 'redux';
+import {Provider}  from 'react-redux';
+import reducer from './src/reducer.js';
 
-
+let store = createStore(reducer);
+console.log("store",store.getState());
 const Stack = createStackNavigator();
 
 function App(){
   return (
-    <>
+    <Provider store={store}>
       <NavigationContainer>
       <Stack.Navigator initialRouteName="Home"
         screenOptions={{
@@ -39,7 +43,7 @@ function App(){
 
       </Stack.Navigator>
     </NavigationContainer>
-    </>
+    </Provider>
   );
 };
 

@@ -3,14 +3,18 @@ import { AsyncStorage,StyleSheet, Text, View,FlatList,Picker, TouchableOpacity,M
 // import AsyncStorage from '@react-native-community/async-storage';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Button from '../components/Button.js';
-import TimePicker from '../components/TimePicker.js';
+import Button from '../src/components/Button.js';
+import TimePicker from '../src/components/TimePicker.js';
 
 import SoundPlayer from 'react-native-sound-player'
 
 import BackgroundTimer from "react-native-background-timer";
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {actionCreators as timerActions} from '../src/reducer'
 
+// import
 function timeItem(time,isDeleteOn){  
     var hours=time/3600;
     var min=Math.floor(time/60);
@@ -110,34 +114,50 @@ let initialState={
     form_on:false,
 }
 let repeat=1;
-export default class extends Component{
+class CustomTimer extends Component{
     
     state={
+        // isPlaying:this.props.isPlaying,
+        // cur_timer_id:this.props.route.params.id,
         id:this.props.route.params.id,
         title:this.props.route.params.title,
         time_list:[],
         timer_on:false,
         form_on:false,
         repeat_form_on:false,
-        repeat: 1
+        repeat: 1,
+        // cur:1
     }
 
     componentDidMount=()=>{
         console.log(this.state.id)
+        // console.log(this.props.isPlaying)
         // initialState.time_list=[]
        
-        // AsyncStorage.setItem('time_list_1',JSON.stringify([{id:1,time:3},{id:2,time:2}]));
-        AsyncStorage.getItem(this.state.id).then((res)=>{
-            if(res==null) return
-            console.log(res)
+        if(this.props.isPlaying){
 
-            var time_list = JSON.parse(res);
-            this.setState({'time_list':time_list})
-            initialState.time_list= res
-            length = this.state.time_list.length;
-            // initialState.time_list=time_list
-            // time_list=JSON.parse(time_list)
-        });
+            // this.setState(this.props)
+            // console.log(this.state.time_list)
+            // this.props.openTimer()
+        }else{
+            // var id=this.props.id;
+            AsyncStorage.getItem(this.state.id).then((res)=>{
+                if(res==null) return
+                console.log(res)
+                var time_list = JSON.parse(res);
+                this.setState({'time_list':time_list})
+                initialState.time_list= res
+                length = this.state.time_list.length;
+
+                var data= {time_list,id:this.state.id}
+                this.props.openTimer(data)
+                console.log(this.props.cur_timer_id)
+                // initialState.time_list=time_list
+                // time_list=JSON.parse(time_list)
+            });
+        }
+        // AsyncStorage.setItem('time_list_1',JSON.stringify([{id:1,time:3},{id:2,time:2}]));
+        
 
         SoundPlayer.onFinishedLoading((success) => {
             console.log('finished loading', success)
@@ -159,8 +179,10 @@ export default class extends Component{
 
     startTimer=   (timeId)=> {
         console.log("startTimer");
-       
+
         // repeat = this.state.repeat;
+
+        this.props.playTimer()
 
         this.state.time_list.filter( (e)=>{
             console.log(e.id+" "+ cur +" "+e.time);
@@ -169,7 +191,7 @@ export default class extends Component{
                 this.setState({timer_on:true});
                 // pause, stop 버튼 활성화
                 // start 버튼 비활성화
-                console.log(initialState.time_list);
+                // console.log(initialState.time_list);
 
                 timerInterval=BackgroundTimer.setInterval(()=>{
                     e.time--;
@@ -220,31 +242,17 @@ export default class extends Component{
     }
     setTimerInitial=()=>{
         console.log("setInitial");
-        this.state.time_list =JSON.parse(initialState.time_list);
+        this.props.stopTimer()
+
+        this.state.time_list =this.props.time_list;
+        // JSON.parse(initialState.time_list);
         this.state.timer_on=false
         this.setState(this.state);
         cur=1;
         repeat=1;
     }
     
-    copyObj=(obj)=> {
-        var copy = {};
-        if (Array.isArray(obj)) {
-          copy = obj.slice().map((v) => {
-            return copyObj(v);
-          });
-        } else if (typeof obj === 'object' && obj !== null) {
-          for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) {
-              copy[attr] = copyObj(obj[attr]);
-            }
-          }
-        } else {
-          copy = obj;
-        }
-        return copy;
-      }
-
+  
 
     addNewTime=async (new_time)=>{
         initialState.time_list.push({id:initialState.time_list.length+1,time:new_time})
@@ -277,17 +285,11 @@ export default class extends Component{
     }
     
 
-    // openNewTimeForm=()=>{
-    //     this.setState({form_on:true});
-    // }
-    // cancleNewTime=()=>{
-    //     this.setState({form_on:false});
-    // }
-
-
-
-
     render(){
+        // console.log(this.state)
+        console.log(this.props.isPlaying)
+        // console.log(this.state.isPlaying)
+
         return(
             <View style={styles.container}>
                 <View style={styles.settingTop}>
@@ -352,8 +354,6 @@ const styles = StyleSheet.create({
         alignItems:'center',
         flexDirection:'row',
     },
-
-    
     timeList: {
         marginTop:15,
         maxHeight:'60%',
@@ -414,3 +414,28 @@ const styles = StyleSheet.create({
         textAlign:"center"
     }
 });
+
+function mapStateToProps(state){
+    const { isPlaying,cur_timer_id,time_list,cur,repeat} = state;
+
+    // console.log
+    
+
+    return {
+        isPlaying,cur_timer_id,time_list,cur,repeat
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        openTimer:bindActionCreators(timerActions.openTimer,dispatch),
+        playTimer: bindActionCreators(timerActions.playTimer,dispatch),
+        countTimer: bindActionCreators(timerActions.countTimer,dispatch),
+        pauseTimer: bindActionCreators(timerActions.pauseTimer,dispatch),
+        replayTimer: bindActionCreators(timerActions.replayTimer,dispatch),
+        stopTimer: bindActionCreators(timerActions.stopTimer,dispatch)
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CustomTimer);
+
