@@ -41,7 +41,7 @@ export default class HomeScreen extends Component{
         ],
         modalVisible: false,
         selectClicked:false,
-        next_id_seq:''
+        next_id_seq:'0'
         
     }
 
@@ -70,7 +70,6 @@ export default class HomeScreen extends Component{
            
             timers.push({id:'time_list'+next_id_seq,title:new_title});
             next_id_seq=String(Number(next_id_seq)+1);
-
             await AsyncStorage.setItem('timers',JSON.stringify(timers));
             await AsyncStorage.setItem('next_id_seq',next_id_seq);
             this.setState({next_id_seq,timers});

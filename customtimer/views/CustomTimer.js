@@ -11,7 +11,7 @@ import SoundPlayer from 'react-native-sound-player'
 import BackgroundTimer from "react-native-background-timer";
 
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {bindActionCreators, createStore} from 'redux';
 import {actionCreators as timerActions} from '../src/reducer'
 
 // import
@@ -117,7 +117,7 @@ let repeat=1;
 class CustomTimer extends Component{
     
     state={
-        isPlaying:false,
+        // isPlaying:false,
         thisTimerIsPlaying:false,
         id:this.props.route.params.id,
         title:this.props.route.params.title,
@@ -131,11 +131,11 @@ class CustomTimer extends Component{
     }
 
     componentDidMount=()=>{
-        console.log(this.state.id)
+        console.log(JSON.stringify(this.props))
         // console.log(this.props.isPlaying)
         // initialState.time_list=[]
        
-        if(this.props.isPlaying&&this.props.cur_timer_id == this.props.route.params.id){
+        if(this.props.thisTimerIsPlaying&&this.props.cur_timer_id == this.props.route.params.id){
             console.log('timer '+ this.props.route.params.title +' is playing')
             this.state.thisTimerIsPlaying= true;
 
@@ -144,18 +144,15 @@ class CustomTimer extends Component{
             // this.props.openTimer()
         }else{
             // var id=this.props.id;
-            console.log('this timer is not playing')
-
+            console.log('this '+ this.props.route.params.id+' is not playing')
+            this.state.thisTimerIsPlaying= false
             AsyncStorage.getItem(this.state.id).then((res)=>{
-                if(res==null) return
-                console.log(res)
-                var time_list = JSON.parse(res);
-                this.setState({'time_list':time_list})
-                // initialState.time_list= res
-                this.state.length = this.state.time_list.length;
-                console.log(this.props.cur_timer_id)
-                // initialState.time_list=time_list
-                // time_list=JSON.parse(time_list)
+                if(res==null) this.setState({'time_list':[]})
+                else {
+                    var time_list = JSON.parse(res);
+                    this.setState({'time_list':time_list})
+                    this.state.length = this.state.time_list.length;
+                }
             });
         }
         // AsyncStorage.setItem('time_list_1',JSON.stringify([{id:1,time:3},{id:2,time:2}]));
@@ -257,17 +254,17 @@ class CustomTimer extends Component{
   
 
     addNewTime=async (new_time)=>{
-        initialState.time_list.push({id:initialState.time_list.length+1,time:new_time})
-        await AsyncStorage.setItem(this.state.id,JSON.stringify(initialState.time_list))
-        await AsyncStorage.getItem(this.state.id).then((res)=>{
-                if(res==null) return
-                console.log(res)
+        var thisTimeList = this.state.time_list
+        var id = ""+this.state.id
 
-                var time_list = JSON.parse(res);
-                this.setState({'time_list':time_list,'form_on':false})
-                initialState.time_list= JSON.parse(res);
-                length = initialState.time_list.length;
-
+        thisTimeList.push({id:thisTimeList.length+1,time:new_time})
+        await AsyncStorage.setItem(id,JSON.stringify(thisTimeList))
+        await AsyncStorage.getItem(id).then((res)=>{
+            if(res==null) {
+                thisTimeList= []
+            }
+            else thisTimeList = JSON.parse(res);
+            this.setState({'time_list':thisTimeList,'form_on':false,'length':thisTimeList.length})
             });
     }
     openNewTimeForm=()=>{
@@ -288,9 +285,46 @@ class CustomTimer extends Component{
     
 
     render(){
-        // console.log(this.state)
-        console.log(this.props.isPlaying)
-        // console.log(this.state.isPlaying)
+        let timeItems
+        let buttons
+        if(this.props.thisTimerIsPlaying&&this.props.cur_timer_id==this.state.id){
+            console.log('this is playing')
+            timeItems = 
+            <FlatList  data={this.props.time_list} renderItem={({item})=>
+                <View>
+                    {timeItem(item.time)}
+                    {/* <TimeItem time={item.time}/> */}
+                </View>}/>
+            buttons = 
+            <>
+            <Button iconName='play-circle' size={70} color='#aaa'></Button>
+            <Button iconName='pause-circle' onPress={()=>this.pauseTimer()} size={70} color='#ffcf00'></Button>
+            <Button iconName='stop-circle' onPress={()=>this.stopTimer()} size={70} color='tomato'></Button>
+            </>
+        }else {
+            console.log('this is not playing')
+
+            timeItems= 
+                <FlatList  data={this.state.time_list} renderItem={({item})=>
+                <TouchableOpacity>
+                    {timeItem(item.time)}
+                    {/* <TimeItem time={item.time}/> */}
+                </TouchableOpacity>}/>
+            buttons = 
+                <>
+                            <Button iconName='play-circle' onPress={()=>{
+                                this.state.thisTimerIsPlaying= true
+                                this.props.playTimer(
+                                    {
+                                        ...this.state,
+                                        cur_timer_id: this.state.id,
+                                    }
+                                )
+                            }} size={70} color='tomato'></Button>
+                            <Button iconName='pause-circle' size={70} color='#aaa'></Button>
+                            <Button iconName='stop-circle' size={70} color='#aaa'></Button>
+                        </>
+        }
 
         return(
             <View style={styles.container}>
@@ -301,11 +335,7 @@ class CustomTimer extends Component{
                 <TouchableHighlight style={styles.settingItem}><Text style={{fontSize:20, fontWeight:'bold'}} >SOUND   <Icon name='music-off'size={25} color='black'/></Text></TouchableHighlight>
                 </View>
                 <View  style={styles.timeList}>
-                <FlatList  data={this.state.time_list} renderItem={({item})=>
-                    <TouchableOpacity>
-                        {timeItem(item.time)}
-                        {/* <TimeItem time={item.time}/> */}
-                    </TouchableOpacity>}/>
+                {timeItems}
                 </View>
                 <View style={styles.addButton} >
                 <Button onPress={()=>this.openNewTimeForm()} iconName='plus-circle' size={45} color='#8894ff' />
@@ -314,20 +344,7 @@ class CustomTimer extends Component{
                 {this.state.repeat_form_on ? <SetRepeatForm confirm={(num)=>this.setState({repeat:num,repeat_form_on:false})} cancle={()=>this.cancleSetRepeat()}/>:(<></>)}
 
                 <View style={styles.buttons}>
-                    {/* <TextInput></TextInput> */}
-                    {
-                        this.state.timer_on ? (<>
-                            <Button iconName='play-circle' size={70} color='#aaa'></Button>
-                            <Button iconName='pause-circle' onPress={()=>this.pauseTimer()} size={70} color='#ffcf00'></Button>
-                            <Button iconName='stop-circle' onPress={()=>this.stopTimer()} size={70} color='tomato'></Button>
-                        </>):
-                        (<>
-                            <Button iconName='play-circle' onPress={()=>this.props.playTimer()} size={70} color='tomato'></Button>
-                            <Button iconName='pause-circle' size={70} color='#aaa'></Button>
-                            <Button iconName='stop-circle' size={70} color='#aaa'></Button>
-                        </>
-                        )
-                    }
+                    {buttons}
                 </View>
 
             </View>
@@ -418,13 +435,13 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state){
-    const { isPlaying,cur_timer_id,time_list,cur,repeat} = state;
+    const { thisTimerIsPlaying,cur_timer_id,time_list,cur,repeat} = {
+        ...state,
 
-    // console.log
-    
+    };    
 
     return {
-        isPlaying,cur_timer_id,time_list,cur,repeat
+        thisTimerIsPlaying,cur_timer_id,time_list,cur,repeat
     }
 }
 
