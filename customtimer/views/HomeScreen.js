@@ -54,17 +54,23 @@ export default class HomeScreen extends Component{
         // AsyncStorage.setItem('timers',JSON.stringify(this.state.timers));
         // console.log(this.props.navigation.header)
        
-        await AsyncStorage.getItem('timers').then((timers)=>this.setState({'timers':JSON.parse(timers)}));
+        await AsyncStorage.getItem('timers').then((timers)=>{
+            if(timers==null) this.setState({'timers':[]})
+            else this.setState({'timers':JSON.parse(timers)})
+    }
+        );
         await AsyncStorage.getItem('next_id_seq').then((num)=>this.setState({"next_id_seq":num}));
 
     }
 
     openNewTimerForm=()=>{
         Alert.prompt('새 타이머 이름','',async (new_title)=>{
-            var timers = this.state.timers;
+            var timers = this.state.timers
             var next_id_seq = this.state.next_id_seq
+           
             timers.push({id:'time_list'+next_id_seq,title:new_title});
             next_id_seq=String(Number(next_id_seq)+1);
+
             await AsyncStorage.setItem('timers',JSON.stringify(timers));
             await AsyncStorage.setItem('next_id_seq',next_id_seq);
             this.setState({next_id_seq,timers});

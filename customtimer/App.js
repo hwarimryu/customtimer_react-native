@@ -10,8 +10,12 @@
 import React from 'react';
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
+
+//UI
 import HomeScreen from './views/HomeScreen.js';
 import CustomTimer from './views/CustomTimer.js';
+
+//redux
 import {createStore} from 'redux';
 import {Provider}  from 'react-redux';
 import reducer from './src/reducer.js';

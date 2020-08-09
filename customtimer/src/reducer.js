@@ -49,17 +49,15 @@ function stopTimer(){
 //reducer
 
 const initialState = {
-    isPlaying:false,
-    cur_timer_id:"",
-    // id:"",
-    title:"",
+    //타이머 open했을 때 check 하는 state들
+    isPlaying:true,
+    cur_timer_id:"time_list1",
+    //실행 중인 타이머 아니고 
+    //타이머 실행할 때 사용하는 state들
     time_list:[],
     timer_on:false,
-    form_on:false,
-    repeat_form_on:false,
     repeat: 1,
-    cur:1
-    
+    cur:1,    
 }
 
 function reducer(state = initialState,action){
@@ -88,16 +86,66 @@ function applyOpenTimer(state,action){
         ...state,
         time_list:action.data.time_list,
         cur_timer_id:action.data.id,
-
-
     }
 }
+var timerInterval
 function applyStartTimer(state){
     console.log('reducer: applyStartTimer')
-    return{
-        ...state,
-        isPlaying:true
-    }
+        // repeat = this.state.repeat;
+
+        state.time_list.filter( (e)=>{
+            console.log(e.id+" "+ cur +" "+e.time);
+
+            if(e.id===state.cur){
+                // pause, stop 버튼 활성화
+                // start 버튼 비활성화
+                // console.log(initialState.time_list);
+
+                timerInterval=BackgroundTimer.setInterval(()=>{
+                    e.time--;
+                    console.log(e.time);
+
+                    if(e.time<=0){
+                        // this.playBell();
+
+                        cur++;
+                       
+                        if(cur>length) {
+                            if(repeat>=this.state.repeat){
+                                this.stopTimer()                             
+                                return {
+                                    ...state,
+                                    isPlaying:true,
+                                    timer_on:true,
+                                    cur:state.cur+1
+                                }
+                            }else {
+                                console.log("repeat: "+repeat);
+                                return {
+                                    ...state,
+                                    time_list: JSON.parse(initialState.time_list),
+                                    cur:state.cur+1,
+                                    repeat: state.repeat+1
+                                }
+                                // state.time_list =JSON.parse(initialState.time_list);
+                                // cur=1
+                                // repeat++;
+                                // this.nextTimer();
+                            }
+                        }
+                        // else this.nextTimer();
+                        else return{
+                            ...state,
+                            isPlaying:true,
+                            timer_on:true
+                        }
+                    }
+
+                    this.setState(this.state);
+                   
+                },1000);
+            }
+        });
 }
 
 function applyCountingTimer(state){

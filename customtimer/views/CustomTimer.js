@@ -108,20 +108,21 @@ class SetRepeatForm extends Component{
 let timerInterval;
 let cur=1;
 let length=0;
-let initialState={
-    time_list:[],
-    timer_on:false,
-    form_on:false,
-}
+// let initialState={
+//     time_list:[],
+//     timer_on:false,
+//     form_on:false,
+// }
 let repeat=1;
 class CustomTimer extends Component{
     
     state={
-        // isPlaying:this.props.isPlaying,
-        // cur_timer_id:this.props.route.params.id,
+        isPlaying:false,
+        thisTimerIsPlaying:false,
         id:this.props.route.params.id,
         title:this.props.route.params.title,
         time_list:[],
+        length:0,
         timer_on:false,
         form_on:false,
         repeat_form_on:false,
@@ -134,23 +135,24 @@ class CustomTimer extends Component{
         // console.log(this.props.isPlaying)
         // initialState.time_list=[]
        
-        if(this.props.isPlaying){
+        if(this.props.isPlaying&&this.props.cur_timer_id == this.props.route.params.id){
+            console.log('timer '+ this.props.route.params.title +' is playing')
+            this.state.thisTimerIsPlaying= true;
 
             // this.setState(this.props)
             // console.log(this.state.time_list)
             // this.props.openTimer()
         }else{
             // var id=this.props.id;
+            console.log('this timer is not playing')
+
             AsyncStorage.getItem(this.state.id).then((res)=>{
                 if(res==null) return
                 console.log(res)
                 var time_list = JSON.parse(res);
                 this.setState({'time_list':time_list})
-                initialState.time_list= res
-                length = this.state.time_list.length;
-
-                var data= {time_list,id:this.state.id}
-                this.props.openTimer(data)
+                // initialState.time_list= res
+                this.state.length = this.state.time_list.length;
                 console.log(this.props.cur_timer_id)
                 // initialState.time_list=time_list
                 // time_list=JSON.parse(time_list)
@@ -177,53 +179,53 @@ class CustomTimer extends Component{
    
 
 
-    startTimer=   (timeId)=> {
-        console.log("startTimer");
+    // startTimer=   (timeId)=> {
+    //     console.log("startTimer");
 
-        // repeat = this.state.repeat;
+    //     // repeat = this.state.repeat;
 
-        this.props.playTimer()
+    //     this.props.playTimer()
 
-        this.state.time_list.filter( (e)=>{
-            console.log(e.id+" "+ cur +" "+e.time);
+    //     this.state.time_list.filter( (e)=>{
+    //         console.log(e.id+" "+ cur +" "+e.time);
 
-            if(e.id===timeId){
-                this.setState({timer_on:true});
-                // pause, stop 버튼 활성화
-                // start 버튼 비활성화
-                // console.log(initialState.time_list);
+    //         if(e.id===timeId){
+    //             this.setState({timer_on:true});
+    //             // pause, stop 버튼 활성화
+    //             // start 버튼 비활성화
+    //             // console.log(initialState.time_list);
 
-                timerInterval=BackgroundTimer.setInterval(()=>{
-                    e.time--;
-                    console.log(e.time);
+    //             timerInterval=BackgroundTimer.setInterval(()=>{
+    //                 e.time--;
+    //                 console.log(e.time);
 
-                    if(e.time<=0){
-                        this.playBell();
+    //                 if(e.time<=0){
+    //                     this.playBell();
 
-                        cur++;
+    //                     cur++;
                        
-                        if(cur>length) {
-                            if(repeat>=this.state.repeat){
-                                this.stopTimer()                             
-                                return
-                            }else {
-                                console.log("repeat: "+repeat);
-                                this.state.time_list =JSON.parse(initialState.time_list);
-                                cur=1
-                                repeat++;
-                                this.nextTimer();
-                            }
-                        }
-                        else this.nextTimer();
-                    }
+    //                     if(cur>length) {
+    //                         if(repeat>=this.state.repeat){
+    //                             this.stopTimer()                             
+    //                             return
+    //                         }else {
+    //                             console.log("repeat: "+repeat);
+    //                             this.state.time_list =JSON.parse(initialState.time_list);
+    //                             cur=1
+    //                             repeat++;
+    //                             this.nextTimer();
+    //                         }
+    //                     }
+    //                     else this.nextTimer();
+    //                 }
 
-                    this.setState(this.state);
+    //                 this.setState(this.state);
                    
-                },1000);
-            }
-        });
+    //             },1000);
+    //         }
+    //     });
 
-    }
+    // }
     
     stopTimer=()=>{
         console.log("stopTimer");
@@ -238,7 +240,7 @@ class CustomTimer extends Component{
     }
     nextTimer=()=>{
         this.pauseTimer();
-        this.startTimer(cur);
+        this.props.startTimer(cur);
     }
     setTimerInitial=()=>{
         console.log("setInitial");
@@ -315,14 +317,14 @@ class CustomTimer extends Component{
                     {/* <TextInput></TextInput> */}
                     {
                         this.state.timer_on ? (<>
-                            <Button iconName='play-circle' onPress={()=>this.startTimer(cur)} size={70} color='#aaa'></Button>
+                            <Button iconName='play-circle' size={70} color='#aaa'></Button>
                             <Button iconName='pause-circle' onPress={()=>this.pauseTimer()} size={70} color='#ffcf00'></Button>
                             <Button iconName='stop-circle' onPress={()=>this.stopTimer()} size={70} color='tomato'></Button>
                         </>):
                         (<>
-                            <Button iconName='play-circle' onPress={()=>this.startTimer(cur)} size={70} color='tomato'></Button>
-                            <Button iconName='pause-circle' onPress={()=>this.pauseTimer()} size={70} color='#aaa'></Button>
-                            <Button iconName='stop-circle' onPress={()=>this.stopTimer()} size={70} color='#aaa'></Button>
+                            <Button iconName='play-circle' onPress={()=>this.props.playTimer()} size={70} color='tomato'></Button>
+                            <Button iconName='pause-circle' size={70} color='#aaa'></Button>
+                            <Button iconName='stop-circle' size={70} color='#aaa'></Button>
                         </>
                         )
                     }

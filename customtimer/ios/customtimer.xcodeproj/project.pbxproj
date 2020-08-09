@@ -46,29 +46,29 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* customtimerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = customtimerTests.m; sourceTree = "<group>"; };
 		0B2AD6777DA2650DAD5474D3 /* libPods-customtimer-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-customtimer-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0EFECA9CC4F2FD45E30B4B44 /* Pods-customtimer-customtimerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-customtimerTests.debug.xcconfig"; path = "Target Support Files/Pods-customtimer-customtimerTests/Pods-customtimer-customtimerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* customtimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = customtimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = customtimer/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = customtimer/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = customtimer/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = customtimer/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = customtimer/main.m; sourceTree = "<group>"; };
-		2106237A642869C4A4AD2BE4 /* Pods-customtimer-customtimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-customtimerTests.release.xcconfig"; path = "Target Support Files/Pods-customtimer-customtimerTests/Pods-customtimer-customtimerTests.release.xcconfig"; sourceTree = "<group>"; };
 		218A9100CDAA344A44C08AE5 /* libPods-customtimer-customtimerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-customtimer-customtimerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		29F49E4696E883EB6FF6D90B /* Pods-customtimer-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-tvOS.release.xcconfig"; path = "Target Support Files/Pods-customtimer-tvOS/Pods-customtimer-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		271005B877FF1CCFFC62672B /* Pods-customtimer-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-customtimer-tvOSTests/Pods-customtimer-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* customtimer-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "customtimer-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* customtimer-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "customtimer-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		490F003242760D481CD53ECA /* Pods-customtimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer.debug.xcconfig"; path = "Target Support Files/Pods-customtimer/Pods-customtimer.debug.xcconfig"; sourceTree = "<group>"; };
 		4D6E89EF6E1D118F7A05C234 /* libPods-customtimer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-customtimer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		581D0FC96089B743149A64C1 /* Pods-customtimer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer.release.xcconfig"; path = "Target Support Files/Pods-customtimer/Pods-customtimer.release.xcconfig"; sourceTree = "<group>"; };
-		67A02AFBC0BB1D59B08A4A15 /* Pods-customtimer-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-customtimer-tvOS/Pods-customtimer-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		6D01EB3FF34151ADDE724B5C /* libPods-customtimer-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-customtimer-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		77C9C871AF7412F2D689414F /* Pods-customtimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer.debug.xcconfig"; path = "Target Support Files/Pods-customtimer/Pods-customtimer.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = customtimer/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A88C2B3B24BEFBE4003093C6 /* note.mp3 */ = {isa = PBXFileReference; explicitFileType = audio.mp3; name = note.mp3; path = ../../Downloads/alert_mp3/note.mp3; sourceTree = "<group>"; };
-		A9A38BE6BD6518898A9CC828 /* Pods-customtimer-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-customtimer-tvOSTests/Pods-customtimer-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		E800CACA67FBF0E376669738 /* Pods-customtimer-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-customtimer-tvOSTests/Pods-customtimer-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		97AD305DB1A5770049332082 /* Pods-customtimer-customtimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-customtimerTests.release.xcconfig"; path = "Target Support Files/Pods-customtimer-customtimerTests/Pods-customtimer-customtimerTests.release.xcconfig"; sourceTree = "<group>"; };
+		A88C2B3B24BEFBE4003093C6 /* note.mp3 */ = {isa = PBXFileReference; explicitFileType = audio.mp3; name = note.mp3; path = ../assets/sounds/note.mp3; sourceTree = SOURCE_ROOT; };
+		AF5831B20059343004CF5BE0 /* Pods-customtimer-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-customtimer-tvOS/Pods-customtimer-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		BEC745211A74E6266949D6D6 /* Pods-customtimer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer.release.xcconfig"; path = "Target Support Files/Pods-customtimer/Pods-customtimer.release.xcconfig"; sourceTree = "<group>"; };
+		BF324FEB9AC2CC6D99AC00E7 /* Pods-customtimer-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-tvOS.release.xcconfig"; path = "Target Support Files/Pods-customtimer-tvOS/Pods-customtimer-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		D1187E3614497542E797F556 /* Pods-customtimer-customtimerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-customtimerTests.debug.xcconfig"; path = "Target Support Files/Pods-customtimer-customtimerTests/Pods-customtimer-customtimerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		EDC41E125761455B41E7A2ED /* Pods-customtimer-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-customtimer-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-customtimer-tvOSTests/Pods-customtimer-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,14 +155,14 @@
 		57CCD694AEC6FEE24EB8A2FB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				490F003242760D481CD53ECA /* Pods-customtimer.debug.xcconfig */,
-				581D0FC96089B743149A64C1 /* Pods-customtimer.release.xcconfig */,
-				0EFECA9CC4F2FD45E30B4B44 /* Pods-customtimer-customtimerTests.debug.xcconfig */,
-				2106237A642869C4A4AD2BE4 /* Pods-customtimer-customtimerTests.release.xcconfig */,
-				67A02AFBC0BB1D59B08A4A15 /* Pods-customtimer-tvOS.debug.xcconfig */,
-				29F49E4696E883EB6FF6D90B /* Pods-customtimer-tvOS.release.xcconfig */,
-				E800CACA67FBF0E376669738 /* Pods-customtimer-tvOSTests.debug.xcconfig */,
-				A9A38BE6BD6518898A9CC828 /* Pods-customtimer-tvOSTests.release.xcconfig */,
+				77C9C871AF7412F2D689414F /* Pods-customtimer.debug.xcconfig */,
+				BEC745211A74E6266949D6D6 /* Pods-customtimer.release.xcconfig */,
+				D1187E3614497542E797F556 /* Pods-customtimer-customtimerTests.debug.xcconfig */,
+				97AD305DB1A5770049332082 /* Pods-customtimer-customtimerTests.release.xcconfig */,
+				AF5831B20059343004CF5BE0 /* Pods-customtimer-tvOS.debug.xcconfig */,
+				BF324FEB9AC2CC6D99AC00E7 /* Pods-customtimer-tvOS.release.xcconfig */,
+				EDC41E125761455B41E7A2ED /* Pods-customtimer-tvOSTests.debug.xcconfig */,
+				271005B877FF1CCFFC62672B /* Pods-customtimer-tvOSTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -675,7 +675,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0EFECA9CC4F2FD45E30B4B44 /* Pods-customtimer-customtimerTests.debug.xcconfig */;
+			baseConfigurationReference = D1187E3614497542E797F556 /* Pods-customtimer-customtimerTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -698,7 +698,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2106237A642869C4A4AD2BE4 /* Pods-customtimer-customtimerTests.release.xcconfig */;
+			baseConfigurationReference = 97AD305DB1A5770049332082 /* Pods-customtimer-customtimerTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -718,13 +718,14 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 490F003242760D481CD53ECA /* Pods-customtimer.debug.xcconfig */;
+			baseConfigurationReference = 77C9C871AF7412F2D689414F /* Pods-customtimer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = customtimer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -741,12 +742,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 581D0FC96089B743149A64C1 /* Pods-customtimer.release.xcconfig */;
+			baseConfigurationReference = BEC745211A74E6266949D6D6 /* Pods-customtimer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = customtimer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -762,7 +764,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 67A02AFBC0BB1D59B08A4A15 /* Pods-customtimer-tvOS.debug.xcconfig */;
+			baseConfigurationReference = AF5831B20059343004CF5BE0 /* Pods-customtimer-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -790,7 +792,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 29F49E4696E883EB6FF6D90B /* Pods-customtimer-tvOS.release.xcconfig */;
+			baseConfigurationReference = BF324FEB9AC2CC6D99AC00E7 /* Pods-customtimer-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -818,7 +820,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E800CACA67FBF0E376669738 /* Pods-customtimer-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = EDC41E125761455B41E7A2ED /* Pods-customtimer-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -845,7 +847,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9A38BE6BD6518898A9CC828 /* Pods-customtimer-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 271005B877FF1CCFFC62672B /* Pods-customtimer-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
