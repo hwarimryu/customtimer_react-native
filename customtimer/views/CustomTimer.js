@@ -146,15 +146,17 @@ class CustomTimer extends Component{
             // var id=this.props.id;
             console.log('this '+ this.props.route.params.id+' is not playing')
             this.state.thisTimerIsPlaying= false
-            AsyncStorage.getItem(this.state.id).then((res)=>{
-                if(res==null) this.setState({'time_list':[]})
-                else {
-                    var time_list = JSON.parse(res);
-                    this.setState({'time_list':time_list})
-                    this.state.length = this.state.time_list.length;
-                }
-            });
+           
         }
+
+        AsyncStorage.getItem(this.state.id).then((res)=>{
+            if(res==null) this.setState({'time_list':[]})
+            else {
+                var time_list = JSON.parse(res);
+                this.setState({'time_list':time_list})
+                this.state.length = this.state.time_list.length;
+            }
+        });
         // AsyncStorage.setItem('time_list_1',JSON.stringify([{id:1,time:3},{id:2,time:2}]));
         
 
@@ -227,6 +229,7 @@ class CustomTimer extends Component{
     stopTimer=()=>{
         console.log("stopTimer");
         // clearInterval(timerInterval);
+
         BackgroundTimer.clearInterval(timerInterval);
         this.setTimerInitial()
     }
@@ -285,68 +288,63 @@ class CustomTimer extends Component{
     
 
     render(){
+        const timerStore= this.props.store
+        console.log(JSON.stringify(timerStore))
         let timeItems
         let buttons
-        if(this.props.thisTimerIsPlaying&&this.props.cur_timer_id==this.state.id){
+
+        if(timerStore.thisTimerIsPlaying&&timerStore.cur_timer_id==this.state.id){
             console.log('this is playing')
             timeItems = 
-            <FlatList  data={this.props.time_list} renderItem={({item})=>
-                <View>
-                    {timeItem(item.time)}
-                    {/* <TimeItem time={item.time}/> */}
-                </View>}/>
+                <FlatList  data={timerStore.time_list} renderItem={({item})=>
+                <View>{timeItem(item.time)}</View>}/>
+
             buttons = 
-            <>
-            <Button iconName='play-circle' size={70} color='#aaa'></Button>
-            <Button iconName='pause-circle' onPress={()=>this.pauseTimer()} size={70} color='#ffcf00'></Button>
-            <Button iconName='stop-circle' onPress={()=>this.stopTimer()} size={70} color='tomato'></Button>
-            </>
+                <><Button iconName='play-circle' size={70} color='#aaa'></Button>
+                <Button iconName='pause-circle' onPress={()=>this.pauseTimer()} size={70} color='#ffcf00'></Button>
+                <Button iconName='stop-circle' onPress={()=>this.props.stopTimer({
+                    ...this.state
+                })} size={70} color='tomato'></Button></>
         }else {
             console.log('this is not playing')
-
             timeItems= 
                 <FlatList  data={this.state.time_list} renderItem={({item})=>
-                <TouchableOpacity>
-                    {timeItem(item.time)}
-                    {/* <TimeItem time={item.time}/> */}
-                </TouchableOpacity>}/>
+                <TouchableOpacity>{timeItem(item.time)}</TouchableOpacity>}/>
             buttons = 
-                <>
-                            <Button iconName='play-circle' onPress={()=>{
-                                this.state.thisTimerIsPlaying= true
-                                this.props.playTimer(
-                                    {
-                                        ...this.state,
-                                        cur_timer_id: this.state.id,
-                                    }
-                                )
-                            }} size={70} color='tomato'></Button>
-                            <Button iconName='pause-circle' size={70} color='#aaa'></Button>
-                            <Button iconName='stop-circle' size={70} color='#aaa'></Button>
-                        </>
+                <><Button iconName='play-circle' onPress={()=>{
+                    this.state.thisTimerIsPlaying= true
+                    this.props.playTimer({
+                        ...this.state,
+                        cur_timer_id: this.state.id,
+                    })
+                }} size={70} color='tomato'></Button>
+                <Button iconName='pause-circle' size={70} color='#aaa'></Button>
+                <Button iconName='stop-circle' size={70} color='#aaa'></Button></>
         }
 
         return(
             <View style={styles.container}>
                 <View style={styles.settingTop}>
-                    
-        <TouchableHighlight style={styles.settingItem} onPress={()=>this.setRepeat()}>< Text style={{fontSize:20, fontWeight:'bold'}}>REPEAT   {this.state.repeat}</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.settingItem}><Text style={{fontSize:20, fontWeight:'bold'}} >SOUND   <Icon name='music-off'size={25} color='black'/></Text></TouchableHighlight>
+                    <TouchableHighlight style={styles.settingItem} onPress={()=>this.setRepeat()}>
+                        < Text style={{fontSize:20, fontWeight:'bold'}}>REPEAT   {this.state.repeat}</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.settingItem}>
+                        <Text style={{fontSize:20, fontWeight:'bold'}} >SOUND<Icon name='music-off'size={25} color='black'/></Text>
+                    </TouchableHighlight>
                 </View>
-                <View  style={styles.timeList}>
-                {timeItems}
+                <View style={styles.timeList}>
+                    {timeItems}
                 </View>
-                <View style={styles.addButton} >
-                <Button onPress={()=>this.openNewTimeForm()} iconName='plus-circle' size={45} color='#8894ff' />
+                <View style={styles.addButton}>
+                    <Button onPress={()=>this.openNewTimeForm()} iconName='plus-circle' size={45} color='#8894ff' />
                 </View>
+                
                 {this.state.form_on ? <NewTimerForm addNewTime={(new_time)=>this.addNewTime(new_time)} cancleNewTime={()=>this.cancleNewTime()}/>:(<></>)}
                 {this.state.repeat_form_on ? <SetRepeatForm confirm={(num)=>this.setState({repeat:num,repeat_form_on:false})} cancle={()=>this.cancleSetRepeat()}/>:(<></>)}
 
                 <View style={styles.buttons}>
                     {buttons}
                 </View>
-
             </View>
         )
     }
@@ -435,19 +433,17 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state){
-    const { thisTimerIsPlaying,cur_timer_id,time_list,cur,repeat} = {
-        ...state,
-
+    const store = {//props에 store라는 이름으로 저장된다.
+        ...state
     };    
 
     return {
-        thisTimerIsPlaying,cur_timer_id,time_list,cur,repeat
+        store
     }
 }
 
 function mapDispatchToProps(dispatch){
     return {
-        openTimer:bindActionCreators(timerActions.openTimer,dispatch),
         playTimer: bindActionCreators(timerActions.playTimer,dispatch),
         countTimer: bindActionCreators(timerActions.countTimer,dispatch),
         pauseTimer: bindActionCreators(timerActions.pauseTimer,dispatch),
